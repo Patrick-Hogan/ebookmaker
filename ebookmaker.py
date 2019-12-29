@@ -62,7 +62,7 @@ class Generator(object):
 
     def outlineEBookContents(self, htmlFile, depth):
         with open(htmlFile, encoding='utf-8', mode='r') as f:
-            soup = BeautifulSoup(f.read())
+            soup = BeautifulSoup(f.read(), features="lxml")
             hTags = ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')
             outline = [h for h in soup.body if getattr(h, 'name', None) in hTags and int(h.name[-1]) <= depth]
             for h in outline:
@@ -75,7 +75,7 @@ class Generator(object):
 
     def collectImagesFromEBookContents(self, htmlFile):
         with open(htmlFile, encoding='utf-8', mode='r') as f:
-            soup = BeautifulSoup(f.read())
+            soup = BeautifulSoup(f.read(), features="lxml")
             x = [img['src'] for img in soup.body.findAll('img') if img.has_attr('src')]
             return x
 
